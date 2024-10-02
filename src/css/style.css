@@ -220,3 +220,45 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+/* Cart badge styles */
+.cart-icon-container {
+  position: relative; 
+}
+
+.cart-icon {
+  width: 25px; 
+  height: auto; 
+}
+
+.cart-count {
+  position: absolute; 
+  top: -5px; 
+  right: -10px; 
+  background-color: #f4df6a; 
+  color: #000000;
+  border-radius: 90%;
+  padding: 5px 8px;
+  font-size: 14px; 
+  font-weight: bold; 
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+/*Delete button*/
+.cart-card__remove {
+  background-color:rgb(251, 49, 49);
+  color: white; 
+  border: none; 
+  border-radius: 5px;
+  padding:0.2em 0.3em; 
+  font-size: var(--small-font); 
+  cursor: pointer; 
+  transition: background-color 0.3s ease;
+  grid-row: 1;
+  grid-column: 3;
+  margin-right: -0.2em;
+}
+
+.cart-card__remove:hover {
+  background-color: var(--secondary-color); 
+}

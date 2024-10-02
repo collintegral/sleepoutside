@@ -25,17 +25,24 @@ export function setClick(selector, callback) {
 export function getParams(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get('product');
+  const product = urlParams.get(param);
 
   return product;
 }
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
- 
+  const htmlString = list.map(templateFn).join('');
+  
   if (clear) {
     parentElement.innerHTML = '';
   }
-L
-  const htmlString = list.map(templateFn).join('');
 
   parentElement.insertAdjacentHTML(position, htmlString);
+}
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const cartCount = cartItems.reduce((total, item) => total + item.Quantity, 0);
+  const cartCountElement = qs("#cart-count"); 
+  if (cartCountElement) {
+    cartCountElement.textContent = cartCount;
+  }
 }

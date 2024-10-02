@@ -1,11 +1,24 @@
-import ProductData from './ProductData.js';
+import ProductData from './ProductData.mjs';
 import ProductListing from './ProductList.mjs';
+import { getLocalStorage } from "./utils.mjs";
 
 
-const productData = new ProductData('./src/data/tents.json');
+const dataSource = new ProductData("tents");
 
-const productListElement = document.querySelector('#product-list');
+const element = document.querySelector(".product-list");
 
-const productListing = new ProductListing('tents', productData, productListElement);
+const productListing = new ProductListing("tents", dataSource, element);
 
-productListing.renderProductList();
+document.addEventListener("DOMContentLoaded", () => { 
+    updateCartCount();
+});
+
+function updateCartCount() {
+    const cartItems = getLocalStorage("so-cart") || [];
+    const cartCountElement = document.getElementById("cart-count");
+    if (cartCountElement) {
+        cartCountElement.textContent = cartItems.length;
+    }
+}
+
+productListing.init();
