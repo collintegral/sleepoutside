@@ -216,6 +216,23 @@ button {
   }
 }
 
+.cart-summary {
+  display: grid;
+  grid-template-columns: 25% 5% 15%;
+}
+
+.cart-total-title {
+  grid-column: 1;
+}
+
+.cart-total-value {
+  grid-column: 3;
+}
+
+.hide {
+  visibility: hidden;
+}
+
 footer {
   font-size: var(--small-font);
   padding: 1em;
