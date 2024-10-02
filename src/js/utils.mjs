@@ -46,3 +46,4 @@ export function updateCartCount() {
   if (cartCountElement) {
     cartCountElement.textContent = cartCount;
   }
+}
