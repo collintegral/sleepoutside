@@ -1,6 +1,6 @@
-import { setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
 
-function productTemplate(product) {
+function productDetailsTemplate(product) {
     return `<section class="product-detail">
         <h3>${product.Brand.Name}</h3>
 
@@ -36,7 +36,7 @@ export default class ProductDetails {
     async init() {
         // use our datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
         this.product = await this.dataSource.findProductById(this.productId);
-        // once we have the product details we can render out the HTML
+        
         this.renderProductDetails("main");
         // once the HTML is rendered we can add a listener to Add to Cart button
         // Notice the .bind(this). Our callback will not work if we don't include that line. Review the readings from this week on 'this' to understand why.
@@ -45,11 +45,24 @@ export default class ProductDetails {
     }
 
     addToCart() {
-        setLocalStorage("so-cart", [this.product]);
+      let cartItems = getLocalStorage("so-cart") || [];
+      const existingItemIndex = cartItems.findIndex(item => item.id === this.product.Id);
+      if (existingItemIndex > -1) {
+        cartItems[existingItemIndex].Quantity += 1;
+    } else {
+      this.product.Quantity = 1;
+        cartItems.push(this.product);
     }
 
+    setLocalStorage("so-cart", cartItems);
+    updateCartCount();
+}
+
     renderProductDetails(selector) {
-        const element = document.querySelector(selector);
-        element.insertAdjacentHTML("afterBegin", productTemplate(this.product));
+      const element = document.querySelector(selector);
+      element.insertAdjacentHTML(
+        "afterBegin",
+        productDetailsTemplate(this.product)
+      );
     }
 }
