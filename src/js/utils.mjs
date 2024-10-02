@@ -29,6 +29,7 @@ export function getParams(param) {
 
   return product;
 }
+
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlString = list.map(templateFn).join('');
   
@@ -45,4 +46,3 @@ export function updateCartCount() {
   if (cartCountElement) {
     cartCountElement.textContent = cartCount;
   }
-}

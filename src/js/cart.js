@@ -26,6 +26,15 @@ function renderCartContents() {
   document.querySelectorAll(".cart-card__remove").forEach((button) => {
       button.addEventListener("click", () => removeItem(button.dataset.id));
   });
+
+  if (htmlItems.length) {
+    let totalPrice = 0;
+    cartItems.forEach(item => {
+      totalPrice += item.FinalPrice;
+    });
+    document.querySelector(".cart-summary").classList.remove("hide");
+    document.querySelector(".cart-total-value").textContent = `$${totalPrice.toFixed(2)}`;
+  }
 }
 
 
@@ -69,3 +78,5 @@ function updateCartCount() {
         cartCountElement.textContent = cartItems.length;;
     }
 }
+
+renderCartContents();
