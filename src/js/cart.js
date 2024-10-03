@@ -1,12 +1,16 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs"; 
+import { getLocalStorage, setLocalStorage, loadHeaderFooter } from "./utils.mjs"; 
+import ShoppingCart from "./ShoppingCart.mjs";
 
 document.addEventListener("DOMContentLoaded", () => { 
     renderCartContents();
+    loadHeaderFooter("../partials/header.html", "main-header")
+    loadHeaderFooter("../partials/footer.html", "main-footer")    
 });
+
 
 function renderCartContents() {
   let cartItems = getLocalStorage("so-cart") || [];
-
+  const productList = document.querySelector(".product-list");
 
   cartItems = cartItems.map(item => {
       if (!item.Quantity) item.Quantity = 1;
@@ -16,44 +20,35 @@ function renderCartContents() {
   updateCartCount(cartItems.length);
 
   if (cartItems.length === 0) {
-      document.querySelector(".product-list").innerHTML = "<p>Your cart is empty</p>";
+    productList.innerHTML = "<p>Your cart is empty</p>";
       return;
   }
 
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  const cartView = new ShoppingCart(cartItems, productList);
+  cartView.init();
 
   document.querySelectorAll(".cart-card__remove").forEach((button) => {
       button.addEventListener("click", () => removeItem(button.dataset.id));
   });
 
-  if (htmlItems.length) {
-    let totalPrice = 0;
-    cartItems.forEach(item => {
-      totalPrice += item.FinalPrice;
-    });
-    document.querySelector(".cart-summary").classList.remove("hide");
-    document.querySelector(".cart-total-value").textContent = `$${totalPrice.toFixed(2)}`;
-  }
+  updateCartTotal();
 }
+    
 
-
-
-function cartItemTemplate(item) {
-    return `
-        <li class="cart-card divider">
-            <a href="#" class="cart-card__image">
-                <img src="${item.Image}" alt="${item.Name}" />
-            </a>
-            <a href="#">
-                <h2 class="card__name">${item.Name}</h2>
-            </a>
-            <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-            <p class="cart-card__quantity">qty: ${item.Quantity}</p>
-            <p class="cart-card__price">$${item.FinalPrice}</p>
-            <button class="cart-card__remove" data-id="${item.Id}">X</button> <!--Delete -->
-        </li>
-    `;
+function updateCartTotal() {
+    let cartItems = getLocalStorage("so-cart") || [];
+    
+    if (cartItems.length) {
+        let totalPrice = 0;
+        cartItems.forEach(item => {
+        totalPrice += item.FinalPrice;
+        });
+        document.querySelector(".cart-summary").classList.remove("hide");
+        document.querySelector(".cart-total-value").textContent = `$${totalPrice.toFixed(2)}`;
+    }
+    else {
+        document.querySelector(".cart-summary").classList.add("hide");
+    }
 }
 
 function removeItem(id) {
@@ -70,7 +65,10 @@ function removeItem(id) {
 
   setLocalStorage("so-cart", cartItems);
   renderCartContents(); 
+
+  updateCartTotal();
 }
+
 function updateCartCount() {
     const cartItems = getLocalStorage("so-cart") || [];
     const cartCountElement = document.getElementById("cart-count");
