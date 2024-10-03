@@ -30,20 +30,45 @@ export function getParams(param) {
   return product;
 }
 
+export function updateCartCount() {
+  const cartItems = getLocalStorage("so-cart") || [];
+  const cartCountElement = document.getElementById("cart-count");
+  if (cartCountElement) {
+      cartCountElement.textContent = cartItems.length;
+  }
+}
+
+export async function loadHeaderFooter(path, element) {
+  let elementTemplate = await fetch(path);
+  let elementTemplateText = await elementTemplate.text();
+  
+  let elementLoc = document.getElementById(element);
+
+  renderWithTemplate(elementTemplateText, elementLoc, updateCartCount);
+}
+
+export function renderWithTemplate(templateFn, parentElement, callback) {  
+  parentElement.insertAdjacentHTML("afterbegin", templateFn);
+  if (callback)
+  {
+    callback();
+  }
+}
+
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlString = list.map(templateFn).join('');
   
   if (clear) {
     parentElement.innerHTML = '';
   }
-
   parentElement.insertAdjacentHTML(position, htmlString);
 }
-export function updateCartCount() {
+
+/* export function updateCartCount() {
   const cartItems = getLocalStorage("so-cart") || [];
   const cartCount = cartItems.reduce((total, item) => total + item.Quantity, 0);
-  const cartCountElement = qs("#cart-count"); 
+  const cartCountElement = qs("#cart-count");
   if (cartCountElement) {
     cartCountElement.textContent = cartCount;
-  }
-}
+  } 
+}*/
