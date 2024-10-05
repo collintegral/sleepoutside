@@ -122,6 +122,37 @@ button {
 .products {
   padding: 0.5em;
 }
+
+.product-categories {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.product-categories a {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+.product-categories img {
+  width: 100%;
+}
+
+.product-categories > li {
+  flex: 1 1 45%;
+  margin: 0.25em;
+  padding: 0.5em;
+  border: 1px solid var(--light-grey);
+  max-width: 220px;
+  height: 100%;
+}
+
+.product-categories h3 {
+  margin: 0.5em 0;
+}
+
 .product-list {
   display: flex;
   flex-flow: row wrap;
