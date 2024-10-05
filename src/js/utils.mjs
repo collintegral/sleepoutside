@@ -46,9 +46,9 @@ export async function loadHeaderFooter(path, element) {
   renderWithTemplate(elementTemplateText, elementLoc, updateCartCount);
 }
 
-export function renderWithTemplate(templateFn, parentElement, callback) {  
-  if (parentElement) {
-    parentElement.insertAdjacentHTML("afterbegin", templateFn);
+export function renderWithTemplate(templateFn, parentElement, item, callback) {  
+  if (parentElement && (typeof templateFn) == 'function') {
+    parentElement.insertAdjacentHTML("afterbegin", templateFn(item));
   }
   if (callback)
   {
