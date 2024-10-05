@@ -1,32 +1,56 @@
-import { renderListWithTemplate } from "./utils.mjs";
+import { renderListWithTemplate, renderWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
   return `<li class="product-card">
-    <a href="product_pages/index.html?product=${product.Id}">
+    <a href="../product_pages/index.html?product=${product.Id}">
       <img
           class="divider"
-          src="${product.Image}"
+          src="${product.Images.PrimaryMedium}"
           alt="${product.Name}"
         />
       <h3 class="card__brand">${product.Brand.Name}</h3>
-      <h2 class="card__name">${product.Name}</h2>
-      <p class="product-card__price">$${product.FinalPrice}</p>
+      <h2 class="card__name">${product.NameWithoutBrand}</h2>
+      <p class="product-card__price">$${product.SuggestedRetailPrice.toFixed(2)}</p>
+    </a>
+  </li>`
+}
+
+function productCardDiscountTemplate(product) {
+  return `<li class="product-card">
+    <a href="../product_pages/index.html?product=${product.Id}">
+      <img
+          class="divider"
+          src="${product.Images.PrimaryMedium}"
+          alt="${product.Name}"
+        />
+      <h3 class="card__brand">${product.Brand.Name}</h3>
+      <h2 class="card__name">${product.NameWithoutBrand}</h2>
+      <span class="product-card__price full-price">$${product.SuggestedRetailPrice.toFixed(2)}</span>
+      <span class="product-card__price">$${product.ListPrice.toFixed(2)}</span>
     </a>
   </li>`
 }
 
 export default class ProductListing {
-  constructor(Category, dataSource, listElement) {
-    this.Category = Category;
+  constructor(category, dataSource, listElement) {
+    this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
   }
   async init() {
-    const list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
     this.renderList(list)
   }
   
   renderList(list) {
-    renderListWithTemplate(productCardTemplate, this.listElement,list, 'beforeend', true);
+    list.forEach(element => {
+      console.log(element);
+      if (!element.IsClearance) {
+        renderWithTemplate(productCardTemplate, this.listElement, element)
+      }
+      else {
+        renderWithTemplate(productCardDiscountTemplate, this.listElement, element)
+      }
+    });
   }
 }

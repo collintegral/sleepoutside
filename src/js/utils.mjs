@@ -41,14 +41,15 @@ export function updateCartCount() {
 export async function loadHeaderFooter(path, element) {
   let elementTemplate = await fetch(path);
   let elementTemplateText = await elementTemplate.text();
-  
   let elementLoc = document.getElementById(element);
 
   renderWithTemplate(elementTemplateText, elementLoc, updateCartCount);
 }
 
-export function renderWithTemplate(templateFn, parentElement, callback) {  
-  parentElement.insertAdjacentHTML("afterbegin", templateFn);
+export function renderWithTemplate(templateFn, parentElement, item, callback) {  
+  if (parentElement && (typeof templateFn) == 'function') {
+    parentElement.insertAdjacentHTML("afterbegin", templateFn(item));
+  }
   if (callback)
   {
     callback();

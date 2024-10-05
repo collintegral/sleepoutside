@@ -122,6 +122,37 @@ button {
 .products {
   padding: 0.5em;
 }
+
+.product-categories {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.product-categories a {
+  text-decoration: none;
+  color: var(--dark-grey);
+}
+
+.product-categories img {
+  width: 100%;
+}
+
+.product-categories > li {
+  flex: 1 1 45%;
+  margin: 0.25em;
+  padding: 0.5em;
+  border: 1px solid var(--light-grey);
+  max-width: 220px;
+  height: 100%;
+}
+
+.product-categories h3 {
+  margin: 0.5em 0;
+}
+
 .product-list {
   display: flex;
   flex-flow: row wrap;
@@ -154,6 +185,11 @@ button {
 .card__name {
   font-size: 1em;
 }
+
+.full-price {
+  text-decoration: line-through;
+}
+
 /* End product list card */
 
 .product-detail {
@@ -239,37 +275,37 @@ footer {
 }
 /* Cart badge styles */
 .cart-icon-container {
-  position: relative; 
+  position: relative;
 }
 
 .cart-icon {
-  width: 25px; 
-  height: auto; 
+  width: 25px;
+  height: auto;
 }
 
 .cart-count {
-  position: absolute; 
-  top: -5px; 
-  right: -10px; 
-  background-color: #f4df6a; 
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #f4df6a;
   color: #000000;
   border-radius: 90%;
   padding: 5px 8px;
-  font-size: 14px; 
-  font-weight: bold; 
+  font-size: 14px;
+  font-weight: bold;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
 }
 /*Delete button*/
 .cart-card__remove {
-  background-color:rgb(251, 49, 49);
-  color: white; 
-  border: none; 
+  background-color: rgb(251, 49, 49);
+  color: white;
+  border: none;
   border-radius: 5px;
-  padding:0.2em 0.3em; 
-  font-size: var(--small-font); 
-  cursor: pointer; 
+  padding: 0.2em 0.3em;
+  font-size: var(--small-font);
+  cursor: pointer;
   transition: background-color 0.3s ease;
   grid-row: 1;
   grid-column: 3;
@@ -277,5 +313,5 @@ footer {
 }
 
 .cart-card__remove:hover {
-  background-color: var(--secondary-color); 
+  background-color: var(--secondary-color);
 }

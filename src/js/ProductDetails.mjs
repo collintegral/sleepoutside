@@ -8,11 +8,11 @@ function productDetailsTemplate(product) {
 
         <img
           class="divider"
-          src="${product.Image}"
+          src="${product.Images.PrimaryLarge}"
           alt="${product.Name}"
         />
 
-        <p class="product-card__price">$${product.FinalPrice}</p>
+        <p class="product-card__price">$${product.ListPrice}</p>
 
         <p class="product__color">${product.Colors[0].ColorName}</p>
 
