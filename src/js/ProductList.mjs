@@ -40,17 +40,10 @@ export default class ProductListing {
   async init() {
     const list = await this.dataSource.getData(this.category);
     this.renderList(list)
+    document.querySelector(".title").innerHTML = this.category;
   }
   
   renderList(list) {
-    list.forEach(element => {
-      console.log(element);
-      if (!element.IsClearance) {
-        renderWithTemplate(productCardTemplate, this.listElement, element)
-      }
-      else {
-        renderWithTemplate(productCardDiscountTemplate, this.listElement, element)
-      }
-    });
+    renderListWithTemplate(productCardTemplate, this.listElement, list);
   }
 }

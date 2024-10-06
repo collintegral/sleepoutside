@@ -8,6 +8,7 @@
   </head>
   <body>
     <header class="divider" id="main-header"></header>
+  
     <main class="divider">
       <div class="hero">
         <img
@@ -15,11 +16,17 @@
           srcset="images/banner-sm.jpg 500w, images/banner.jpg"
           alt="image of a high mountain lake"
         />
-        <div class="logo logo--square">
-          <img src="/images/noun_Tent_2517.svg" alt="tent image for logo" />
-          <div>Sleep<span class="highlight">Outside</span></div>
-        </div>
       </div>
+      <form id="search-form" action="product_listing/index.html" method="GET">
+        <input 
+          type="text" 
+          id="search-input" 
+          name="query" 
+          placeholder="Search for products..." 
+          required 
+        />
+        <button type="submit">Search</button>
+      </form>
       <section class="mission">
         <p>We spend too much time these days indoors...sitting usually.</p>
         <p>No wonder we are a mess!</p>
