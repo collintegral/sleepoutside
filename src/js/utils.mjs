@@ -39,6 +39,10 @@ export function updateCartCount() {
 
 export async function loadHeaderFooter(path, element) {
   let elementTemplate = await fetch(path);
+if (!elementTemplate.ok) {
+    console.error(`Error ${elementTemplate.status}: No se pudo cargar ${path}`);
+    return;
+}
   let elementTemplateText = await elementTemplate.text();
   let elementLoc = document.getElementById(element);
 
