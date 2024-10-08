@@ -1,4 +1,4 @@
-import { loadHeaderFooter, getParam  } from "./utils.mjs";
+import { loadHeaderFooter, getParam ,renderWithTemplate } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 
@@ -16,4 +16,4 @@ const element = document.querySelector(".product-list");
 const listing = new ProductList(category, dataSource, element);
 
 listing.init();
-
+renderWithTemplate();

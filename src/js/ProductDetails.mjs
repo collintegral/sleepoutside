@@ -58,11 +58,13 @@ export default class ProductDetails {
     updateCartCount();
 }
 
-    renderProductDetails(selector) {
-      const element = document.querySelector(selector);
-      element.insertAdjacentHTML(
-        "afterBegin",
-        productDetailsTemplate(this.product)
-      );
-    }
+renderProductDetails(selector) {
+  const element = document.querySelector(selector);
+  if (!element) {
+      console.error(`Element with selector "${selector}" not found.`);
+      return;
+  }
+  element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
+}
+
 }
