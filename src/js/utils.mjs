@@ -49,15 +49,15 @@ if (!elementTemplate.ok) {
   renderWithTemplate(elementTemplateText, elementLoc, updateCartCount);
 }
 
-export function renderWithTemplate(templateFn, parentElement, item, callback) {  
-  if (parentElement && (typeof templateFn) == 'function') {
-    parentElement.insertAdjacentHTML("afterbegin", templateFn(item));
+export function renderWithTemplate(templateText, parentElement, callback) {
+  if (parentElement) {
+    parentElement.insertAdjacentHTML("afterbegin", templateText);
   }
-  if (callback)
-  {
+  if (callback) {
     callback();
   }
 }
+
 
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlString = list.map(templateFn).join('');

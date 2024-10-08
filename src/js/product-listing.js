@@ -2,6 +2,12 @@ import { loadHeaderFooter, getParam  } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadHeaderFooter("../partials/header.html", "main-header");
+    loadHeaderFooter("../partials/footer.html", "main-footer");
+  });
+  
 loadHeaderFooter();
 
 const category = getParam("category");
