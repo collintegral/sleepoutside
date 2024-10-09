@@ -46,22 +46,36 @@ export async function loadHeaderFooter(path, element) {
   renderWithTemplate(elementTemplateText, elementLoc, updateCartCount);
 }
 
-export function renderWithTemplate(templateFn, parentElement, item, callback) {  
-  if (parentElement && (typeof templateFn) == 'function') {
-    parentElement.insertAdjacentHTML("afterbegin", templateFn(item));
-  }
+export function renderWithTemplate(templateFn, parentElement, callback) {  
+    parentElement.insertAdjacentHTML("afterbegin", templateFn);
+
   if (callback)
   {
     callback();
   }
 }
 
-export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
-  const htmlString = list.map(templateFn).join('');
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false, discounted = false) {
+  let htmlString = "";
+  if (discounted) {
+    list.forEach(element => {
+      if (element.IsClearance) {
+        htmlString += templateFn(element, true);
+      }
+      else {
+        htmlString += templateFn(element, false);
+      }
+    });
+  }
+
+  else {
+    htmlString = list.map(templateFn).join('');
+  }
   
   if (clear) {
     parentElement.innerHTML = '';
   }
+
   parentElement.insertAdjacentHTML(position, htmlString);
 }
 
