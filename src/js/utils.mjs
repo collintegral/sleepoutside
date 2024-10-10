@@ -59,6 +59,7 @@ export function renderWithTemplate(templateText, parentElement, callback) {
 }
 
 
+
 export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
   const htmlString = list.map(templateFn).join('');
   
