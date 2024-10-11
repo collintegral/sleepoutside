@@ -1,5 +1,31 @@
-
+import ExternalServices from "./ExternalServices.mjs";
 import { getLocalStorage } from './utils.mjs';
+
+function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+
+  formData.forEach((value, key) => {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
+}
+
+function packageItems(items) {
+  return items.map((item) => {
+    return {
+      id: item.Id,
+      name: item.Name,
+      price: item.FinalPrice,
+      quantity: item.Quantity,
+    };
+  });
+}
+
+function calculateTotal(items) {
+  return items.reduce((total, item) => total + item.price * item.quantity, 0);
+}
 
 export default class CheckoutProcess {
   constructor(key, outputSelector) {
@@ -10,6 +36,7 @@ export default class CheckoutProcess {
     this.shipping = 0; // costo de envío
     this.tax = 0; // impuestos
     this.orderTotal = 0; // total del pedido
+    this.externalServices = new ExternalServices();
   }
 
   init() {
@@ -25,12 +52,12 @@ export default class CheckoutProcess {
     document.getElementById('subtotal').textContent = `$${this.itemTotal.toFixed(2)}`;
   }
 
-  calculateOrderTotal(zipCode) {
+  calculateOrderTotal() {
     // Estimación de los costos de envío según el código postal
-    this.shipping = this.calculateShipping(zipCode);
+    this.shipping = 10 + 2 * (this.list.length - 1)
     
     // Estimación de impuestos (supongamos un 10% de impuestos)
-    this.tax = this.itemTotal * 0.10;
+    this.tax = this.itemTotal * 0.06;
     
     // Calcula el total del pedido
     this.orderTotal = this.itemTotal + this.shipping + this.tax;
@@ -40,6 +67,7 @@ export default class CheckoutProcess {
   }
 
   calculateShipping(zipCode) {
+    zipCode = String(zipCode);
     // Ejemplo de cálculo de envío basado en el código postal (puedes cambiar esta lógica)
     if (zipCode.startsWith('9')) {
       return 20.00; // Envío más caro para códigos que comienzan con 9 (Ej: costa oeste)
@@ -61,6 +89,37 @@ export default class CheckoutProcess {
       return 4.00; // El envío más económico para códigos que comienzan con 1 (costa este)
     } else {
       return 10.00; // Valor predeterminado para otros códigos
+    }
+  }
+
+  async checkout(form) {
+    const formData = formDataToJSON(form);
+    const cartItems = JSON.parse(localStorage.getItem("so-cart")) || [];
+    const packagedItems = packageItems(cartItems);
+
+    //It creates an object that contains the order details.
+    const dataObject = {
+      orderDate: new Date(),
+      fname: formData.firstName,
+      lname: formData.lastName,
+      street: formData.streetAddress,
+      city: formData.city,
+      state: formData.state,
+      zip: formData.zipCode,
+      cardNumber: formData.creditCardNumber,
+      expiration: formData.expirationDate,
+      code: formData.securityCode,
+      items: packagedItems,
+      orderTotal: this.orderTotal,
+      shipping: this.shipping,
+      tax: this.tax
+    };
+
+    try {
+      const response = await this.externalServices.sendOrder(dataObject);
+      console.log("Order sent successfully:", response);
+    } catch (error) {
+      console.error("Error sending order:", error);
     }
   }
 

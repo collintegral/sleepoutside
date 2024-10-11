@@ -23,7 +23,7 @@ export default class ExternalServices {
     return data.Result;
   }
   async sendOrder(orderData) {
-    const response = await fetch(baseURL + `checkout`, {
+    const response = await fetch(baseURL + `checkout/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
