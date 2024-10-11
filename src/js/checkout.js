@@ -13,9 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const checkout = new CheckoutProcess('so-cart', '.order-summary');
   checkout.init();
 
-  // Cuando el usuario complete el código postal
   document.getElementById('zipCode').addEventListener('change', (event) => {
     const zipCode = event.target.value;
     checkout.calculateOrderTotal(zipCode);
+  });
+  const checkoutForm = document.getElementById('checkout-form')
+  checkoutForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    checkout.checkout(checkoutForm);
   });
 });
