@@ -1,4 +1,4 @@
-import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
 
 document.addEventListener("DOMContentLoaded", () => {
   loadHeaderFooter("../partials/header.html", "main-header");
