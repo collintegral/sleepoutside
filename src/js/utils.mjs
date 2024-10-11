@@ -49,23 +49,36 @@ if (!elementTemplate.ok) {
   renderWithTemplate(elementTemplateText, elementLoc, updateCartCount);
 }
 
-export function renderWithTemplate(templateText, parentElement, callback) {
-  if (parentElement) {
-    parentElement.insertAdjacentHTML("afterbegin", templateText);
-  }
-  if (callback) {
+export function renderWithTemplate(templateFn, parentElement, callback) {  
+    parentElement.insertAdjacentHTML("afterbegin", templateFn);
+
+  if (callback)
+  {
     callback();
   }
 }
 
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false, discounted = false) {
+  let htmlString = "";
+  if (discounted) {
+    list.forEach(element => {
+      if (element.IsClearance) {
+        htmlString += templateFn(element, true);
+      }
+      else {
+        htmlString += templateFn(element, false);
+      }
+    });
+  }
 
-
-export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
-  const htmlString = list.map(templateFn).join('');
+  else {
+    htmlString = list.map(templateFn).join('');
+  }
   
   if (clear) {
     parentElement.innerHTML = '';
   }
+
   parentElement.insertAdjacentHTML(position, htmlString);
 }
 

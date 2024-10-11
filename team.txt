@@ -3,3 +3,8 @@ https://trello.com/b/3poSvHj5/wdd330-sleepoutside
 
 Collin Christensen
 Carol Nacher
+<<<<<<< HEAD
+Colton Egbert
+=======
+Colton Egbert
+>>>>>>> 7f641cf8d5c5ac989f8099110aaadac7e02ec543
