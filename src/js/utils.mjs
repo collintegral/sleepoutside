@@ -82,11 +82,26 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
   parentElement.insertAdjacentHTML(position, htmlString);
 }
 
-/* export function updateCartCount() {
-  const cartItems = getLocalStorage("so-cart") || [];
-  const cartCount = cartItems.reduce((total, item) => total + item.Quantity, 0);
-  const cartCountElement = qs("#cart-count");
-  if (cartCountElement) {
-    cartCountElement.textContent = cartCount;
-  } 
-}*/
+export function alertMessage(message, scroll=true) {
+  const popupBox = document.createElement('div');
+  popupBox.classList.add('popup');
+
+  const popupMessage = document.createElement('p');
+  popupMessage.textContent = message;
+  popupBox.appendChild(popupMessage);
+
+  const popupX = document.createElement('span');
+  popupX.textContent = 'X';
+  popupBox.appendChild(popupX);
+  
+  const main = document.querySelector('main');
+  main.prepend(popupBox);
+
+  popupBox.addEventListener('click', () => {
+    main.removeChild(popupBox);
+  });
+
+  if (scroll) {
+    window.scrollTo(0,0);
+  }
+}

@@ -41,9 +41,16 @@ export default class ProductListing {
 
   //Methods that generate HTML templates displaying the information of each product.
   productCardTemplate(product) {
+  let productPic;
+  if (screen.width >= 500) {
+    productPic = product.Images.PrimaryMedium;
+  } else {
+    productPic = product.Images.PrimarySmall;
+  }
+
     return `<li class="product-card">
             <a href="../product_pages/index.html?product=${product.Id}">
-                <img class="divider" src="${product.Images.PrimaryMedium}" alt="${product.Name}" />
+                <img class="divider" src="${productPic}" alt="${product.Name}" />
                 <h3 class="card__brand">${product.Brand.Name}</h3>
                 <h2 class="card__name">${product.NameWithoutBrand}</h2>
                 <p class="product-card__price">$${product.SuggestedRetailPrice.toFixed(2)}</p>
@@ -52,9 +59,16 @@ export default class ProductListing {
   }
 
   productCardDiscountTemplate(product) {
+    let productPic;
+  if (screen.width >= 500) {
+    productPic = product.Images.PrimaryMedium;
+  } else {
+    productPic = product.Images.PrimarySmall;
+  }
+  
     return `<li class="product-card">
             <a href="../product_pages/index.html?product=${product.Id}">
-                <img class="divider" src="${product.Images.PrimaryMedium}" alt="${product.Name}" />
+                <img class="divider" src="${productPic}" alt="${product.Name}" />
                 <h3 class="card__brand">${product.Brand.Name}</h3>
                 <h2 class="card__name">${product.NameWithoutBrand}</h2>
                 <span class="product-card__price full-price">$${product.SuggestedRetailPrice.toFixed(2)}</span>

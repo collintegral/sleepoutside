@@ -1,12 +1,19 @@
 import { renderListWithTemplate, renderWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product, isDiscounted) {
+  let productPic;
+  if (screen.width >= 500) {
+    productPic = product.Images.PrimaryMedium;
+  } else {
+    productPic = product.Images.PrimarySmall;
+  }
+
   if (!isDiscounted) {
     return `<li class="product-card">
       <a href="../product_pages/index.html?product=${product.Id}">
         <img
             class="divider"
-            src="${product.Images.PrimaryMedium}"
+            src="${productPic}"
             alt="${product.Name}"
           />
         <h3 class="card__brand">${product.Brand.Name}</h3>
@@ -20,7 +27,7 @@ function productCardTemplate(product, isDiscounted) {
       <a href="../product_pages/index.html?product=${product.Id}">
         <img
             class="divider"
-            src="${product.Images.PrimaryMedium}"
+            src="${productPic}"
             alt="${product.Name}"
           />
         <h3 class="card__brand">${product.Brand.Name}</h3>
@@ -44,6 +51,7 @@ export default class ProductListing {
   }
   
   renderList(list) {
+    console.log('test');
     renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", false, true)
   }
 }

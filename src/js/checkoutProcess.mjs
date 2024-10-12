@@ -1,5 +1,5 @@
 import ExternalServices from "./ExternalServices.mjs";
-import { getLocalStorage } from './utils.mjs';
+import { getLocalStorage, alertMessage } from './utils.mjs';
 
 function formDataToJSON(formElement) {
   const formData = new FormData(formElement);
@@ -117,9 +117,9 @@ export default class CheckoutProcess {
 
     try {
       const response = await this.externalServices.sendOrder(dataObject);
-      console.log("Order sent successfully:", response);
+      window.location.href = "../checkout/success.html";
     } catch (error) {
-      console.error("Error sending order:", error);
+      alertMessage(Object.values(error.message)[0]);
     }
   }
 

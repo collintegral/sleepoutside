@@ -1,6 +1,13 @@
-import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount, alertMessage } from "./utils.mjs";
 
 function productDetailsTemplate(product) {
+  let productPic;
+  if (screen.width >= 500) {
+    productPic = product.Images.PrimaryLarge;
+  } else {
+    productPic = product.Images.PrimaryMedium;
+  }
+
     return `<section class="product-detail">
         <h3>${product.Brand.Name}</h3>
 
@@ -8,7 +15,7 @@ function productDetailsTemplate(product) {
 
         <img
           class="divider"
-          src="${product.Images.PrimaryLarge}"
+          src="${productPic}"
           alt="${product.Name}"
         />
 
@@ -54,6 +61,7 @@ export default class ProductDetails {
 
     setLocalStorage("so-cart", cartItems);
     updateCartCount();
+    alertMessage('Added to Cart!');
 }
 
 renderProductDetails(selector) {
