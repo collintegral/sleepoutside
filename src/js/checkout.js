@@ -6,19 +6,23 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHeaderFooter("../partials/footer.html", "main-footer");
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const checkout = new CheckoutProcess("so-cart", ".order-summary");
-  checkout.init();
 
-  checkout.calculateOrderTotal();
-  document.getElementById("zipCode").addEventListener("change", (/*event*/) => {
-    // const zipCode = event.target.value;
-    checkout.calculateOrderTotal();
-  });
+const checkout = new CheckoutProcess("so-cart", ".order-summary");
+checkout.init();
+
+document
+  .querySelector("#zipCode")
+  .addEventListener("blur", checkout.calculateOrderTotal.bind(checkout));
+document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
+  e.preventDefault();
+
+  checkout.checkout();
+
 
   const checkoutForm = document.getElementById("checkout-form");
-  checkoutForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    checkout.checkout(checkoutForm);
-  });
+checkoutForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  console.log("event.preventDefault() ha sido llamado");
+  checkout.checkout(checkoutForm);
+});
 });

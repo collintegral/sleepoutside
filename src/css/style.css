@@ -426,3 +426,25 @@ input {
 .order-summary li span {
   float: right;
 }
+/*alert message*/
+
+.alert {
+  background-color: #f0b535;
+  color: #070707;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #df9008;
+  border-radius: 5px;
+  position: relative;
+}
+
+.alert .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #000000;
+}
