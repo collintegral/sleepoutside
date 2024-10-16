@@ -12,15 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function renderCartContents() {
-  let cartItems = getLocalStorage("so-cart") || [];
+  const cartItems = getLocalStorage("so-cart") || [];
   const productList = document.querySelector(".product-list");
 
-  cartItems = cartItems.map((item) => {
-    if (!item.Quantity) item.Quantity = 1;
-    return item;
+  productList.innerHTML = ""; // Clear existing items
+
+  cartItems.forEach(item => {
+    const existingItem = cartItems.find(cartItem => cartItem.Id === item.Id);
+    if (existingItem) {
+      existingItem.Quantity += 1;
+    } else {
+      cartItems.push(item);
+    }
   });
 
+  setLocalStorage("so-cart", cartItems);  // Update cart in localStorage
   updateCartCount(cartItems.length);
+
 
   if (cartItems.length === 0) {
     productList.innerHTML = "<p>Your cart is empty</p>";

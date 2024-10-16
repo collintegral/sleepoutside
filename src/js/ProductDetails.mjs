@@ -12,7 +12,10 @@ function productDetailsTemplate(product) {
           alt="${product.Name}"
         />
 
-        <p class="product-card__price">$${product.ListPrice}</p>
+        <p class="product-card__price">
+        $${product.FinalPrice} 
+        <span class="discount" style="color:red;">${(product.ListPrice - product.FinalPrice).toFixed(2)} off</span>
+     </p>
 
         <p class="product__color">${product.Colors[0].ColorName}</p>
 
