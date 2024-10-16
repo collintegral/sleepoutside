@@ -30,7 +30,4 @@ export default class ShoppingCart {
     }
 
     renderList(list) {
-        console.log('test');
-        renderListWithTemplate(cartItemTemplate, this.listElement, list, 'beforeend', true);
-    }
-}
+     
