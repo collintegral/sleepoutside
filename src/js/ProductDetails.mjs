@@ -36,13 +36,11 @@ export default class ProductDetails {
         this.dataSource = dataSource;
     }
 
+    //This code searches for and retrieves a product based on its ID. It displays the product details on the page. It sets up the "Add to Cart" button to function correctly when the user clicks on it.
     async init() {
-        // use our datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
-        this.product = await this.dataSource.findProductById(this.productId);
         
+        this.product = await this.dataSource.findProductById(this.productId);
         this.renderProductDetails("main");
-        // once the HTML is rendered we can add a listener to Add to Cart button
-        // Notice the .bind(this). Our callback will not work if we don't include that line. Review the readings from this week on 'this' to understand why.
         document.getElementById('addToCart')
         .addEventListener('click', this.addToCart.bind(this));
     }
@@ -61,11 +59,13 @@ export default class ProductDetails {
     updateCartCount();
 }
 
-    renderProductDetails(selector) {
-      const element = document.querySelector(selector);
-      element.insertAdjacentHTML(
-        "afterBegin",
-        productDetailsTemplate(this.product)
-      );
-    }
+renderProductDetails(selector) {
+  const element = document.querySelector(selector);
+  if (!element) {
+      console.error(`Element with selector "${selector}" not found.`);
+      return;
+  }
+  element.insertAdjacentHTML("afterBegin", productDetailsTemplate(this.product));
+}
+
 }

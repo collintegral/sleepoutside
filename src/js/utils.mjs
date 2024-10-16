@@ -22,11 +22,10 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener("click", callback);
 }
 
-export function getParams(param) {
+export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const product = urlParams.get(param);
-
   return product;
 }
 
@@ -40,6 +39,10 @@ export function updateCartCount() {
 
 export async function loadHeaderFooter(path, element) {
   let elementTemplate = await fetch(path);
+if (!elementTemplate.ok) {
+    console.error(`Error ${elementTemplate.status}: No se pudo cargar ${path}`);
+    return;
+}
   let elementTemplateText = await elementTemplate.text();
   let elementLoc = document.getElementById(element);
 

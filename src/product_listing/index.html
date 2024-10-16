@@ -3,25 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sleep Outside | Home</title>
+    <title>Sleep Outside | tents</title>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
     <header class="divider" id="main-header"></header>
+
     <main class="divider">
-      <div class="hero">
-        <img
-          src="../images/banner-sm.jpg"
-          srcset="../images/banner-sm.jpg 500w, ../images/banner.jpg"
-          alt="image of a high mountain lake"
-        />
-        <div class="logo logo--square">
-          <img src="../images/noun_Tent_2517.svg" alt="tent image for logo" />
-          <div>Sleep<span class="highlight">Outside</span></div>
-        </div>
-      </div>
+      <select id="sort-options">
+        <option value="name">Ordenar por nombre</option>
+        <option value="price">Ordenar por precio</option>
+      </select>
       <section class="products">
         <h2 class="product-title">Top Products</h2>
+        <h1 class="title"></h1>
         <ul class="product-list"></ul>
       </section>
     </main>
